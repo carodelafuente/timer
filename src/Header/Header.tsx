@@ -1,6 +1,10 @@
+import './Header.css'
+
 const Header = () => {
     return (
-        <h1>Timer</h1>
+        <div className='headerContainer'>
+            <h1 className='headerText'>Timer</h1>
+        </div>
     )
 }
 

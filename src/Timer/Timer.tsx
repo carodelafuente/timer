@@ -1,34 +1,47 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import Header from '../Header';
 import Progress from '../Progress';
 import TimerControls from '../TimerControls';
 
-const Timer = () => {
-    const [initialTime, setInitialTime] = useState(0) // in seconds
-    const [duration, setDuration] = useState(0); // in seconds
-    const [isPaused, setPaused] = useState(true);
+import './Timer.css';
 
-    useEffect(() => {
-        if (initialTime) {
-            setDuration(initialTime)
+const Timer = () => {
+    const [initialTime, setInitialTime] = useState<number>(0) // in seconds
+    const [duration, setDuration] = useState<number>(0); // in seconds
+    const [isPaused, setPaused] = useState<boolean>(true);
+    const [minutes, setMinutes] = useState<number>(0);
+    const [seconds, setSeconds] = useState<number>(0);
+
+    const handlePlayOrPause = () => {
+        setPaused(prev => !prev);
+
+        if (isPaused && initialTime === 0) {
+            const initialValueCalculated = (minutes ? minutes * 60 : 0) + (seconds ? seconds : 0)
+            setInitialTime(initialValueCalculated);
+            setDuration(initialValueCalculated)
         }
-    }, [initialTime])
+    }
 
     return (
-        <>
+        <div className='timerContainer'>
             <Header />
             <Progress
                 duration={duration}
                 initialTime={initialTime}
+                isPaused={isPaused}
                 setDuration={setDuration}
-                setInitialTime={setInitialTime}
+                minutes={minutes}
+                seconds={seconds}
+                setMinutes={setMinutes}
+                setSeconds={setSeconds}
             />
             <TimerControls
+                handlePlayOrPause={handlePlayOrPause}
                 isPaused={isPaused}
                 setPaused={setPaused}
             />
-        </>
+        </div>
     )
 }
 

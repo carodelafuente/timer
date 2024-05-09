@@ -1,20 +1,33 @@
 import { useEffect } from 'react'
 
-import ProgessBar from '../ProgessBar'
+import ProgressBar from '../ProgressBar'
 import CurrentTime from '../CurrentTime'
 
 interface ProgressProps {
     duration: number
     initialTime: number
+    isPaused: boolean
+    minutes: number
+    seconds: number
+    setMinutes: React.Dispatch<React.SetStateAction<number>>
+    setSeconds: React.Dispatch<React.SetStateAction<number>>
     setDuration: React.Dispatch<React.SetStateAction<number>>
-    setInitialTime: React.Dispatch<React.SetStateAction<number>>
 }
 
-const Progress = ({ duration, initialTime, setDuration, setInitialTime }: ProgressProps) => {
+const Progress = ({
+    duration,
+    initialTime,
+    isPaused,
+    minutes,
+    seconds,
+    setMinutes,
+    setSeconds,
+    setDuration,
+}: ProgressProps) => {
     useEffect(() => {
         let interval: NodeJS.Timeout;
 
-        if (initialTime) {
+        if (initialTime && !isPaused) {
             interval = setInterval(() => {
                 setDuration((prev) => {
                     const newDuration = prev - 1
@@ -28,12 +41,19 @@ const Progress = ({ duration, initialTime, setDuration, setInitialTime }: Progre
         }
 
         return () => clearInterval(interval);
-    }, [initialTime])
+    }, [isPaused])
 
     return (
         <>
-            <ProgessBar initialTime={initialTime} duration={duration} />
-            <CurrentTime setInitialTime={setInitialTime} />
+            <ProgressBar initialTime={initialTime} duration={duration} />
+            <CurrentTime
+                duration={duration}
+                isPaused={isPaused}
+                minutes={minutes}
+                seconds={seconds}
+                setMinutes={setMinutes}
+                setSeconds={setSeconds}
+            />
         </>
     )
 }

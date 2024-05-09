@@ -1,32 +1,99 @@
 import { useState } from 'react'
 
+import './CurrentTime.css'
+
 interface CurrentTimeProps {
-    setInitialTime: React.Dispatch<React.SetStateAction<number>>
+    duration: number
+    isPaused: boolean
+    minutes: number
+    seconds: number
+    setMinutes: React.Dispatch<React.SetStateAction<number>>
+    setSeconds: React.Dispatch<React.SetStateAction<number>>
 }
 
-const CurrentTime = ({ setInitialTime }: CurrentTimeProps) => {
-    const [inputValue, setInputValue] = useState(0);
+const CurrentTime = ({
+    duration,
+    isPaused,
+    minutes,
+    seconds,
+    setMinutes,
+    setSeconds,
+}: CurrentTimeProps) => {
+    const [isEditing, setIsEditing] = useState(false);
 
     const handleSecondsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInitialTime((prev) => prev + parseInt(e.target.value));
+        setSeconds(parseInt(e.target.value))
       };
 
     const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const minutesInSeconds = parseInt(e.target.value) * 60;
-        setInitialTime((prev) => prev + minutesInSeconds);
+        setMinutes(parseInt(e.target.value))
     };
 
     const convertToTimeFormat = (seconds: number) => {
-        const minutes = Math.floor(seconds / 60);
+        const min = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
-        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-      };
+        const sec = `${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`
+
+        return {
+            min,
+            sec
+        }
+    };
+
+    const onFocus = () => {
+        setIsEditing(true)
+    }
+
+    const onBlur = () => {
+        setIsEditing(false)
+    }
+    
+    const minutesFormatted = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    const secondsFormatted = seconds < 10 ? `0${seconds}` : `${seconds}`;
 
     return (
         <>
-        <label htmlFor='progress-bar'>{convertToTimeFormat(inputValue)} (mm:ss)</label> 
-        <input type='number' min={0} onChange={handleMinutesChange} />
-        <input type='number' min={0} onChange={handleSecondsChange} />
+        <div className='inputsContainer'>
+            {isEditing ? (
+            <input
+                className='numberInput'
+                type='number'
+                min={0}
+                onChange={handleMinutesChange}
+                maxLength={2}
+                value={minutesFormatted}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                />
+            ) : (
+                <button
+                    className='timeDisplayButton'
+                    onClick={() => setIsEditing(true)}
+                >
+                    {duration ? convertToTimeFormat(duration).min : minutesFormatted}
+                </button>
+            )}
+            <span className='colon'>:</span>
+            {isEditing ? (
+                <input
+                className='numberInput'
+                type='number'
+                min={0}
+                maxLength={2}
+                onChange={handleSecondsChange}
+                value={secondsFormatted}
+                onFocus={onFocus}
+                onBlur={onBlur}
+            />
+            ) : (
+                <button
+                        className='timeDisplayButton'
+                        onClick={() => setIsEditing(true)}
+                    >
+                        {duration ? convertToTimeFormat(duration).sec : secondsFormatted}
+                </button>
+            )}
+        </div>
         </>
     )
 }
