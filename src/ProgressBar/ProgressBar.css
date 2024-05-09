@@ -1,0 +1,9 @@
+.MuiCircularProgress-root {
+    width: 200px !important;
+    height: 200px !important;
+}
+
+.progressBar {
+    height: 100%;
+    margin: 40px 0;
+}

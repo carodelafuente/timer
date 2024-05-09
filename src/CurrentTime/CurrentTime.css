@@ -1,0 +1,27 @@
+.inputsContainer {
+    display: flex;
+    position: relative;
+    bottom: 180px;
+    justify-content: center;
+    height: 100%;
+}
+
+.numberInput {
+    background: transparent;
+    width: 65px;
+    height: 60px;
+    color: white;
+    font-size: 3rem;
+    border: none;
+}
+
+.timeDisplayButton {
+    color: white;
+    font-size: 3rem;
+    background: transparent;
+    border: none;
+}
+
+.colon {
+    font-size: 3rem;
+}

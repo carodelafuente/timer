@@ -1,0 +1,11 @@
+.headerContainer {
+    width: 100%;
+    background-color: #37464A;
+    text-align: center;
+    border-radius: 12px 12px 0 0;
+}
+
+.headerText { 
+    margin: 16px;
+    font-size: 1.5rem;
+}

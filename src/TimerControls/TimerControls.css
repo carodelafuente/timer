@@ -1,0 +1,17 @@
+.controlsContainer {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.buttonStyles {
+    background: transparent;
+    border: none;
+    position: relative;
+    bottom: 50px;
+}
+
+.otherControls {
+    font-size: 1rem;
+    font-weight: bold;
+}
