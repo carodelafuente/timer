@@ -12,7 +12,7 @@ const ProgressBar = ({ duration, initialTime }: ProgressBarProps) => {
         <div className='progressBar'>
             <CircularProgress
                 variant='determinate'
-                value={(duration / initialTime) * 100}
+                value={((duration / initialTime) * 100) || 100}
             />
         </div>
     )

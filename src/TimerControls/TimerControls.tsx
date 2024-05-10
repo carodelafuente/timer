@@ -5,18 +5,29 @@ import SvgIcon from '@mui/material/SvgIcon';
 import './TimerControls.css'
 
 interface TimerControlsProps {
+    handleAddTime: () => void
+    handleReset: () => void
     handlePlayOrPause: () => void
     isPaused: boolean
-    setPaused: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const TimerControls = ({ handlePlayOrPause, isPaused, setPaused }: TimerControlsProps) => {
+const TimerControls = ({ handleAddTime, handleReset, handlePlayOrPause, isPaused }: TimerControlsProps) => {
+    const playPauseButtonAriaLabel = isPaused ? 'Start timer' : 'Pause timer';
+
     return (
         <div className='controlsContainer'>
-            <button className='buttonStyles otherControls'>
+            <button
+                aria-label='Add one minute'
+                onClick={handleAddTime}
+                className='buttonStyles otherControls'
+            >
                 +1:00
             </button>
-            <button className='buttonStyles' onClick={handlePlayOrPause}>
+            <button
+                className='buttonStyles'
+                onClick={handlePlayOrPause}
+                aria-label={playPauseButtonAriaLabel}
+            >
                 {isPaused ? (
                     <SvgIcon color='primary' fontSize='large' component={PlayCircleFilledRoundedIcon} />
                 ) : (
@@ -24,7 +35,7 @@ const TimerControls = ({ handlePlayOrPause, isPaused, setPaused }: TimerControls
                 )}
             </button>
 
-            <button className='buttonStyles otherControls'>
+            <button onClick={handleReset} className='buttonStyles otherControls'>
                 Reset
             </button>
         </div>

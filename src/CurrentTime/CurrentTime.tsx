@@ -4,7 +4,6 @@ import './CurrentTime.css'
 
 interface CurrentTimeProps {
     duration: number
-    isPaused: boolean
     minutes: number
     seconds: number
     setMinutes: React.Dispatch<React.SetStateAction<number>>
@@ -13,7 +12,6 @@ interface CurrentTimeProps {
 
 const CurrentTime = ({
     duration,
-    isPaused,
     minutes,
     seconds,
     setMinutes,

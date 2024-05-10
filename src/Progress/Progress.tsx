@@ -6,6 +6,7 @@ import CurrentTime from '../CurrentTime'
 interface ProgressProps {
     duration: number
     initialTime: number
+    handleReset: () => void
     isPaused: boolean
     minutes: number
     seconds: number
@@ -16,6 +17,7 @@ interface ProgressProps {
 
 const Progress = ({
     duration,
+    handleReset,
     initialTime,
     isPaused,
     minutes,
@@ -32,7 +34,9 @@ const Progress = ({
                 setDuration((prev) => {
                     const newDuration = prev - 1
                     if (newDuration === 0) {
-                        clearInterval(interval)
+                        clearInterval(interval);
+                        handleReset();
+                        window.alert('Timer complete!');
                     }
 
                     return newDuration
@@ -48,7 +52,6 @@ const Progress = ({
             <ProgressBar initialTime={initialTime} duration={duration} />
             <CurrentTime
                 duration={duration}
-                isPaused={isPaused}
                 minutes={minutes}
                 seconds={seconds}
                 setMinutes={setMinutes}
